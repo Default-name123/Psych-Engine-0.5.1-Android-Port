@@ -703,10 +703,10 @@ class PlayState extends MusicBeatState
 		}
 
 
-/*		// "GLOBAL" SCRIPTS
+       // "GLOBAL" SCRIPTS
 		#if LUA_ALLOWED
 		var filesPushed:Array<String> = [];
-		var foldersToCheck:Array<String> = [SUtil.getPath() + Paths.getPreloadPath('scripts/')];
+		var foldersToCheck:Array<String> = [Paths.getPreloadPath('scripts/')];
 
 		#if MODS_ALLOWED
 		foldersToCheck.insert(0, Paths.mods('scripts/'));
@@ -727,9 +727,8 @@ class PlayState extends MusicBeatState
 					}
 				}
 			}
-		} gotta fix this soon 
+		}
 		#end
-*/		
 
 		// STAGE SCRIPTS
 		#if (MODS_ALLOWED && LUA_ALLOWED)
@@ -1066,19 +1065,30 @@ class PlayState extends MusicBeatState
 		startingSong = true;
 
 
-		// SONG SPECIFIC SCRIPTS
-		// STAGE SCRIPTS
-                var doPush:Bool = false;
-                var luaFile:String = Paths.getPreloadPath('/data/' + Paths.formatToSongPath(SONG.song) + '/');
-                luaFile = Paths.getPreloadPath(luaFile);                      
-		if(OpenFlAssets.exists(luaFile)) {
-                        doPush = true;
-                }
-		
-		if(doPush)
-                        luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
+		#if LUA_ALLOWED
+		var doPush:Bool = false;
 
+		if(openfl.utils.Assets.exists("assets/data/" + Paths.formatToSongPath(SONG.song) + "/" + "script.lua"))
+		{
+			var path = Paths.luaAsset("data/" + Paths.formatToSongPath(SONG.song) + "/" + "script");
+			var luaFile = openfl.Assets.getBytes(path);
+
+			FileSystem.createDirectory(Main.path + "assets");
+			FileSystem.createDirectory(Main.path + "assets/data");
+			FileSystem.createDirectory(Main.path + "assets/data/");
+			FileSystem.createDirectory(Main.path + "assets/data/" + Paths.formatToSongPath(SONG.song));
+
+			File.saveBytes(Paths.lua("data/" + Paths.formatToSongPath(SONG.song) + "/" + "script"), luaFile);
+
+			doPush = true;
+		}
+		if(doPush) 
+			luaArray.push(new FunkinLua(Paths.lua("data/" + Paths.formatToSongPath(SONG.song) + "/" + "script")));
+
+		#end
+		
 		var daSong:String = Paths.formatToSongPath(curSong);
+		
 		if (isStoryMode && !seenCutscene)
 		{
 			switch (daSong)
