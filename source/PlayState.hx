@@ -1068,8 +1068,9 @@ class PlayState extends MusicBeatState
 
 		// SONG SPECIFIC SCRIPTS
 		// STAGE SCRIPTS
+                #if LUA_ALLOWED
                 var doPush:Bool = false;
-                var luaFile:String = '/data/' + Paths.formatToSongPath(SONG.song) + '/' + 'script.lua';
+                var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/script.lua';
                 luaFile = Paths.getPreloadPath(luaFile);                      
 		if(OpenFlAssets.exists(luaFile)) {
                         doPush = true;
@@ -1077,6 +1078,8 @@ class PlayState extends MusicBeatState
 		
 		if(doPush)
                         luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
+                        
+                        #end
 
 		var daSong:String = Paths.formatToSongPath(curSong);
 		if (isStoryMode && !seenCutscene)
