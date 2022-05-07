@@ -52,6 +52,7 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import lime.app.Application;
+import openfl.Assets;
 
 #if MODS_ALLOWED
 import sys.FileSystem;
@@ -1068,18 +1069,17 @@ class PlayState extends MusicBeatState
 
 		// SONG SPECIFIC SCRIPTS
 		// STAGE SCRIPTS
-                #if LUA_ALLOWED
-                var doPush:Bool = false;
-                var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/script.lua';
-                luaFile = Paths.getPreloadPath(luaFile);                      
-		if(OpenFlAssets.exists(luaFile)) {
-                        doPush = true;
-                }
+   		#if LUA_ALLOWED
+		var doPush:Bool = false;
+		var luaFile:String = 'data/' + Paths.formatToSongPath(SONG.song) + '/script.lua';
+	    luaFile = Paths.getPreloadPath(luaFile);
+		    if(OpenFlAssets.exists(luaFile)) {
+				doPush = true;
+			}
 		
-		if(doPush)
-                        luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));
-                        
-                        #end
+		if(doPush) 
+			luaArray.push(new FunkinLua(Asset2File.getPath(luaFile)));			
+		#end		
 
 		var daSong:String = Paths.formatToSongPath(curSong);
 		if (isStoryMode && !seenCutscene)
