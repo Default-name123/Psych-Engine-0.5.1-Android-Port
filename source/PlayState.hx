@@ -55,6 +55,7 @@ import lime.app.Application;
 import openfl.Assets;
 
 import sys.FileSystem;
+import sys.io.File;
 
 using StringTools;
 
