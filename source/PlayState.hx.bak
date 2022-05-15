@@ -53,7 +53,9 @@ import FunkinLua;
 import DialogueBoxPsych;
 import lime.app.Application;
 
+#if MODS_ALLOWED
 import sys.FileSystem;
+#end
 
 using StringTools;
 
@@ -1065,7 +1067,7 @@ class PlayState extends MusicBeatState
 
 
 		// SONG SPECIFIC SCRIPTS
-        #if LUA_ALLOWED
+               #if LUA_ALLOWED
 		var doPush:Bool = false;
 
 		if(openfl.utils.Assets.exists("assets/data/" + Paths.formatToSongPath(SONG.song) + "/" + "script.lua"))
