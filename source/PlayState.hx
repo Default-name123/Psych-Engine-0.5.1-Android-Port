@@ -1067,7 +1067,8 @@ class PlayState extends MusicBeatState
 
 
 		// SONG SPECIFIC SCRIPTS
-   		#if LUA_ALLOWED
+		// Por fin funciona esta cosa xD -MasterX
+   	#if LUA_ALLOWED
 		var doPush:Bool = false;
 
 		if(openfl.utils.Assets.exists("assets/data/" + Paths.formatToSongPath(SONG.song) + "/" + "script.lua"))
